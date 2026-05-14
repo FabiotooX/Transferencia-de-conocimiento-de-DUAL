@@ -33,73 +33,27 @@ describe('JSONPlaceholder API - Tareas', function () {
     // Método: POST /posts
     // Se espera: status 201, que devuelva un id, y que los datos coincidan
     it('Crea un post correctamente', function () {
-        cy.request({
-            method: 'POST',
-            url: '/posts',
-            body: this.postData
-        }).then((response) => {
-            expect(response.status).to.eq(201)
-            expect(response.body).to.have.property('id')
-            expect(response.body).to.include({
-                title: this.postData.title,
-                body: this.postData.body,
-                userId: this.postData.userId
-            })
-        })
+
     })
 
     // Ejercicio 2: Actualizar un post existente con los datos del fixture PUT.json
     // Método: PUT /posts/1
     // Se espera: status 200, que el id siga siendo 1, y que los datos se actualicen
     it('Actualiza un post correctamente', function () {
-        cy.request({
-            method: 'PUT',
-            url: '/posts/1',
-            body: this.putData
-        }).then((response) => {
-            expect(response.status).to.eq(200)
-            expect(response.body).to.have.property('id', 1)
-            expect(response.body).to.include({
-                title: this.putData.title,
-                body: this.putData.body,
-                userId: this.putData.userId
-            })
-        })
+
     })
 
     // Ejercicio 3: Borrar un post
     // Método: DELETE /posts/1
     // Se espera: status 200 o 204, y cuerpo vacío {}
     it('Borra un post correctamente', function () {
-        cy.request({
-            method: 'DELETE',
-            url: '/posts/1'
-        }).then((response) => {
-            expect(response.status).to.be.oneOf([200, 204])
-            if (response.body) {
-                expect(response.body).to.deep.equal({})
-            }
-        })
+
     })
 
     // Ejercicio 4: Filtrar posts por userId usando query params
     // Método: GET /posts?userId=1
     // Se espera: status 200, que sea un array, y que todos los posts tengan userId = 1
     it('Obtiene posts filtrados por userId', function () {
-        const userId = 1
 
-        cy.request({
-            method: 'GET',
-            url: '/posts',
-            qs: { userId }
-        }).then((response) => {
-            expect(response.status).to.eq(200)
-            expect(response.body).to.be.an('array')
-            expect(response.body.length).to.be.greaterThan(0)
-
-            response.body.forEach((post) => {
-                expect(post).to.have.property('userId', userId)
-            })
-        })
     })
 })
